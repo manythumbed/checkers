@@ -103,7 +103,7 @@ var Between gocheck.Checker = &betweenChecker{&gocheck.CheckerInfo{Name: "Betwee
 func containsType(c interface{}, t interface{}) bool {
 	switch v := reflect.ValueOf(c); v.Kind() {
 	case reflect.Slice, reflect.Array:
-		return  v.Type().Elem() == reflect.TypeOf(t)
+		return v.Type().Elem() == reflect.TypeOf(t)
 	}
 	return false
 }
@@ -113,7 +113,7 @@ func containsValue(container, value interface{}) bool {
 		switch c := reflect.ValueOf(container); c.Kind() {
 		case reflect.Slice, reflect.Array:
 			for i := 0; i < c.Len(); i++ {
-				if reflect.DeepEqual(c.Index(i).Interface(), value)	{
+				if reflect.DeepEqual(c.Index(i).Interface(), value) {
 					return true
 				}
 			}

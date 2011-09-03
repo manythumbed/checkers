@@ -10,6 +10,7 @@ func Test(t *testing.T) {
 }
 
 type S struct {
+
 }
 
 var _ = Suite(&S{})
@@ -38,7 +39,7 @@ type y struct {
 	Val int
 }
 
-func (s *S) TestContainsType(c *C)	{
+func (s *S) TestContainsType(c *C) {
 	a := []int{2, 3, 4}
 	c.Check(containsType(a, a[0]), Equals, true)
 	c.Check(containsType(a, a), Equals, false)
