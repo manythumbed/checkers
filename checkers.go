@@ -10,30 +10,8 @@ type containsChecker struct {
 	*gocheck.CheckerInfo
 }
 
-func contains(slice []int, value int) bool {
-	for _, v := range slice {
-		if v == value {
-			return true
-		}
-	}
-	return false
-}
-
 func (c *containsChecker) Check(params []interface{}, names []string) (result bool, error string) {
-	var (
-		ok    bool
-		slice []int
-		value int
-	)
-	slice, ok = params[0].([]int)
-	if !ok {
-		return false, "First parameter is not a []int"
-	}
-	value, ok = params[1].(int)
-	if !ok {
-		return false, "Second parameter is not an int"
-	}
-	return contains(slice, value), ""
+	return contains(params[0], params[1]), ""
 }
 
 var Contains gocheck.Checker = &containsChecker{&gocheck.CheckerInfo{Name: "Contains", Params: []string{"Container", "Expected to contain"}}}
@@ -108,7 +86,7 @@ func containsType(c interface{}, t interface{}) bool {
 	return false
 }
 
-func containsValue(container, value interface{}) bool {
+func contains(container, value interface{}) bool {
 	if containsType(container, value) {
 		switch c := reflect.ValueOf(container); c.Kind() {
 		case reflect.Slice, reflect.Array:

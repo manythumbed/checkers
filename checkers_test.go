@@ -15,12 +15,6 @@ type S struct {
 
 var _ = Suite(&S{})
 
-func (s *S) TestContains(c *C) {
-	a := []int{1, 2, 3}
-	c.Check(a, Contains, 3)
-	c.Check(a, Not(Contains), 4)
-}
-
 func (s *S) TestToleranceEquality(c *C) {
 	c.Check(1.0, EqualsWithTolerance, 1.25, 0.5)
 	c.Check(1.0, Not(EqualsWithTolerance), 1.25, 0.05)
@@ -50,24 +44,23 @@ func (s *S) TestContainsType(c *C) {
 	c.Check(containsType(b, y{0}), Equals, false)
 }
 
-func (s *S) TestContainsValue(c *C) {
+func (s *S) TestContains(c *C) {
 	a := []int{2, 3, 4}
-	c.Check(containsValue(a, a[0]), Equals, true)
-	c.Check(containsValue(a, a[1]), Equals, true)
-	c.Check(containsValue(a, a[2]), Equals, true)
-	c.Check(containsValue(a, 2), Equals, true)
-	c.Check(containsValue(a, 3), Equals, true)
-	c.Check(containsValue(a, 4), Equals, true)
-	c.Check(containsValue(a, 5), Equals, false)
-	c.Check(containsValue(a, a), Equals, false)
-	c.Check(containsValue(a, "x"), Equals, false)
+	c.Check(a, Contains, a[0])
+	c.Check(a, Contains, a[1])
+	c.Check(a, Contains, a[2])
+	c.Check(a, Contains, 2)
+	c.Check(a, Contains, 3)
+	c.Check(a, Contains, 4)
+	c.Check(a, Not(Contains), 5)
+	c.Check(a, Not(Contains), a)
+	c.Check(a, Not(Contains), "x")
 
 	b := []x{x{"1"}, x{"2"}}
-	c.Check(containsValue(b, b[0]), Equals, true)
-	c.Check(containsValue(b, b[1]), Equals, true)
-	c.Check(containsValue(b, x{"1"}), Equals, true)
-	c.Check(containsValue(b, x{"2"}), Equals, true)
-	c.Check(containsValue(b, x{"3"}), Equals, false)
-	c.Check(containsValue(b, y{0}), Equals, false)
-
+	c.Check(b, Contains, b[0])
+	c.Check(b, Contains, b[1])
+	c.Check(b, Contains, x{"1"})
+	c.Check(b, Contains, x{"2"})
+	c.Check(b, Not(Contains), x{"3"})
+	c.Check(b, Not(Contains), y{0})
 }
